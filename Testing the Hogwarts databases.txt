@@ -1,0 +1,165 @@
+1.Выведите имя, фамилию, патронуса всех персонажей, у которых есть patronus и он известен:
+
+SQL:
+
+SELECT characters.first_name, characters.last_name, patronuses.name
+FROM characters
+JOIN patronuses ON characters.patronus_id = patronuses.id
+WHERE characters.patronus_id IS NOT NULL;
+
+2.Выведите фамилию персонажей, у которых последняя буква в фамилии ‘e’:
+
+SQL:
+
+SELECT last_name
+FROM characters
+WHERE last_name LIKE '%e';
+
+3.Посчитайте общий возраст всех персонажей и выведите это на экран:
+
+SQL:
+
+SELECT SUM(age)
+FROM characters;
+
+4.Выведите имя, фамилию и возраст персонажей по убыванию их возраста:
+
+SQL:
+
+SELECT first_name, last_name, age
+FROM characters
+ORDER BY age DESC;
+
+5.Выведите имя персонажа и возраст, у которых последний находится в диапазоне от 50 до 100 лет:
+
+SQL:
+
+SELECT first_name, age
+FROM characters
+WHERE age BETWEEN 50 AND 100;
+
+6.Выведите возраст всех персонажей так, чтобы среди них не было тех, у кого он одинаковый:
+
+SQL:
+
+SELECT DISTINCT age
+FROM characters;
+
+7.Выведите всю информацию о персонажах, у которых faculty = Gryffindor и чей возраст больше 30 лет:
+
+SQL:
+
+SELECT *
+FROM characters
+WHERE faculty = 'Gryffindor' AND age > 30;
+
+8.Выведите имена первых трех факультетов из таблицы, так чтобы факультеты не повторялись:
+
+SQL:
+
+SELECT DISTINCT name
+FROM faculties
+LIMIT 3;
+
+9.Выведите имена всех персонажей, у которых имя начинается с ‘H’ и состоит из 5 букв, или чье имя начинается с ‘L’:
+
+SQL:
+
+SELECT first_name
+FROM characters
+WHERE (first_name LIKE 'H____' OR first_name LIKE 'L%');
+
+10.Посчитайте средний возраст всех персонажей:
+
+SQL:
+
+SELECT AVG(age)
+FROM characters;
+
+11.Удалите персонажа с ID = 11:
+
+SQL:
+
+DELETE FROM characters
+WHERE id = 11;
+
+12.Выведите фамилию всех персонажей, которые содержат в ней букву ‘a’:
+
+SQL:
+
+SELECT last_name
+FROM characters
+WHERE last_name LIKE '%a%';
+
+13.Используйте псевдоним для того, чтобы временно замените название столбца fname на Half-Blood Prince для реального принца-полукровки:
+
+SQL:
+
+SELECT first_name AS "Half-Blood Prince"
+FROM characters
+WHERE first_name = 'Severus' AND last_name = 'Snape';
+
+14.Выведите id и имена всех патронусов в алфавитном порядки, при условии что они есть или известны:
+
+SQL:
+
+SELECT id, name
+FROM patronuses
+WHERE name IS NOT NULL
+ORDER BY name;
+
+15.Используя оператор IN, выведите имя и фамилию тех персонажей, у которых фамилия Crabbe, Granger или Diggory:
+
+SQL:
+
+SELECT first_name, last_name
+FROM characters
+WHERE last_name IN ('Crabbe', 'Granger', 'Diggory');
+
+16.Выведите минимальный возраст персонажа:
+
+SQL:
+
+SELECT MIN(age)
+FROM characters;
+
+17.Используя оператор UNION выберите имена из таблицы characters и названия книг из таблицы library:
+
+SQL:
+
+SELECT first_name
+FROM characters
+UNION
+SELECT title
+FROM library;
+
+18.Используя оператор HAVING посчитайте количество персонажей на каждом факультете, оставив только те факультеты, где количество студентов больше 1:
+
+SQL:
+
+SELECT faculty, COUNT(*)
+FROM characters
+GROUP BY faculty
+HAVING COUNT(*) > 1;
+
+19.Используя оператор CASE опишите следующую логику: Выведите имя и фамилию персонажа, а также следующий текстовое сообщение:
+
+SQL:
+
+SELECT first_name, last_name,
+CASE
+    WHEN faculty = 'Gryffindor' THEN 'Godric'
+    WHEN faculty = 'Slytherin' THEN 'Salazar'
+    WHEN faculty = 'Ravenclaw' THEN 'Rowena'
+    WHEN faculty = 'Hufflepuff' THEN 'Helga'
+    ELSE 'Muggle'
+END AS Founders
+FROM characters;
+
+20.Используя регулярное выражение найдите фамилии персонажей, которые не начинаются с букв H, L или S и выведите их:
+
+SQL:
+
+SELECT last_name
+FROM characters
+WHERE last_name NOT REGEXP '^[HLS]';
